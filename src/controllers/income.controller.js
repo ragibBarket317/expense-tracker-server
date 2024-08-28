@@ -5,6 +5,7 @@ const addIncome = async (req, res) => {
     const { amount, source, date } = req.body;
 
     const newIncome = new Income({
+      user: req.user._id,
       amount,
       source,
       date,
@@ -18,7 +19,7 @@ const addIncome = async (req, res) => {
 
 const getIncome = async (req, res) => {
   try {
-    const incomes = await Income.find({});
+    const incomes = await Income.find({ user: req.user._id });
     res.status(200).json(incomes);
   } catch (error) {
     res.status(500).json({ message: error.message });
